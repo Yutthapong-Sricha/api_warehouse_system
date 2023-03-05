@@ -1,0 +1,119 @@
+Step create api warehouse system
+=======================
+
+1. check GOPATH and SET GOPATH in environment
+----
+
+2. create folder for api 
+        mkdir api_warehouse_system
+----
+
+3. create go.mod
+        cd api_warehouse_system
+        go mod init 'path/project name'
+----
+
+4. install plugin package
+        go get "github.com/gin-gonic/gin"
+        go get "github.com/joho/godotenv"
+        go get "github.com/go-sql-driver/mysql"
+        go get github.com/gin-contrib/cors
+----
+
+5. create main.go and test add code test
+        package main
+
+        import (
+        "net/http"
+
+        "github.com/gin-gonic/gin"
+        )
+
+        func main() {
+        r := gin.Default()
+        r.GET("/ping", func(c *gin.Context) {
+            c.JSON(http.StatusOK, gin.H{
+            "message": "pong",
+            })
+        })
+        r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+        }
+----
+
+6. Test run 
+        go run main.go  หรือ  go run .
+        เปิด browser พิมพ์ localhost:8080/ping
+        result จาก api { "message": "pong" }
+----
+
+7. ออกแบบโครงสร้าง ในการทำงาน 
+    folder initializers
+    -   สำหรับ โหลด config database , โหลด ค่าใน .env สำหรับใช้งาน
+----    
+
+8. SET connect mysql
+    8.1 create .env
+            add data for connect user/password/databasename 
+            add PORT for RUN if not add default 8080
+    8.2 create folder initializers
+            mkdir initializers
+            cd initializers
+    8.3 create file envVars.go and add code
+        package initializers
+
+        import (
+            "log"
+
+            "github.com/joho/godotenv"
+        )
+
+        func LoadEnvVariables() {
+            err := godotenv.Load()
+            if err != nil {
+                log.Fatal("Error loading .env file")
+            }
+
+        }
+
+    8.4 create file db.go and add code   
+        package initializers
+
+        import (
+            "database/sql"
+            "os"
+            "time"
+            _ "github.com/go-sql-driver/mysql"
+        )
+
+        var DB *sql.DB
+
+        func ConnectDB() {
+            var err error
+            dsn := os.Getenv("DB_URL")
+            DB, err = sql.Open("mysql", dsn)
+            if err != nil {
+                panic(err)
+            }
+
+            DB.SetConnMaxLifetime(time.Minute * 3)
+            DB.SetMaxOpenConns(10)
+            DB.SetMaxIdleConns(10)
+        }
+----
+
+9.  ทำ Routes สำหรับ เรียกข้อมูล
+    create file routes.go and add code   
+    
+
+
+
+9.  แก้ไขไฟล์ main.go เพิ่ม                    
+        func init() {
+            initializers.LoadEnvVariables()
+            initializers.ConnectDB()
+        }
+
+
+
+
+        
