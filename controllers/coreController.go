@@ -15,12 +15,12 @@ func Hello(c *gin.Context) {
 }
 
 func Positions(c *gin.Context) {
-	Positions := models.ListPosition()
-	c.IndentedJSON(http.StatusOK, Positions)
+	positions := models.ListPosition()
+	c.IndentedJSON(http.StatusOK, positions)
 }
 
 func GetPosition(c *gin.Context) {
-	c.IndentedJSON(http.StatusOK, gin.H{
-		"message": "GetPosition",
-	})
+	id := c.Param("id")
+	position := models.GetPosition(id)
+	c.IndentedJSON(http.StatusOK, position)
 }
