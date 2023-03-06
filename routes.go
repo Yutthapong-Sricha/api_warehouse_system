@@ -10,6 +10,10 @@ import (
 
 func initializeRoutes() {
 
+	// router.GET("/", func(c *gin.Context) {
+	// 	c.IndentedJSON(http.StatusForbidden, gin.H{"message": "error api"})
+	// })
+
 	router.GET("/", func(c *gin.Context) {
 		c.IndentedJSON(http.StatusOK, gin.H{
 			"message": "api main",

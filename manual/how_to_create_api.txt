@@ -17,7 +17,8 @@ Step create api warehouse system
         go get "github.com/gin-gonic/gin"
         go get "github.com/joho/godotenv"
         go get "github.com/go-sql-driver/mysql"
-        go get github.com/gin-contrib/cors
+        go get "github.com/gin-contrib/cors"
+        go get -u -v "github.com/go-session/gin-session"
 ----
 
 5. create server.go and test add code test
