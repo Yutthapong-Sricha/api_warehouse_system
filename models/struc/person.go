@@ -1,4 +1,4 @@
-package helper
+package models
 
 // Binding from JSON
 type Staff struct {

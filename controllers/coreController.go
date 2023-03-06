@@ -10,7 +10,7 @@ import (
 func Hello(c *gin.Context) {
 
 	c.IndentedJSON(http.StatusOK, gin.H{
-		"message": "Group v1",
+		"message": "has api Group",
 	})
 }
 

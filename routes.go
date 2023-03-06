@@ -16,23 +16,13 @@ func initializeRoutes() {
 		})
 	})
 
-	// Simple group: v1
-	v1 := router.Group("/v1")
+	// Simple group: coredata
+	coredata := router.Group("/coredata")
 	{
-		v1.GET("/", controllers.Hello)
-		v1.GET("/position", controllers.Positions)
+		coredata.GET("/", controllers.Hello)             // localhost:xxxx/coredata/
+		coredata.GET("/position", controllers.Positions) // localhost:xxxx/coredata/position
 
-		v1.GET("/getposition/:id", controllers.GetPosition)
-		//v1.POST("/login", loginEndpoint)
-		//v1.POST("/submit", submitEndpoint)
-		//v1.POST("/read", readEndpoint)
+		coredata.GET("/getposition/:id", controllers.GetPosition) // localhost:xxxx/coredata/getposition/xx
 	}
 
-	// Simple group: v2
-	//v2 := router.Group("/v2")
-	//{
-	//v2.POST("/login", loginEndpoint)
-	//v2.POST("/submit", submitEndpoint)
-	//v2.POST("/read", readEndpoint)
-	//}
 }

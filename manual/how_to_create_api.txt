@@ -20,7 +20,7 @@ Step create api warehouse system
         go get github.com/gin-contrib/cors
 ----
 
-5. create main.go and test add code test
+5. create server.go and test add code test
         package main
 
         import (
@@ -41,7 +41,7 @@ Step create api warehouse system
 ----
 
 6. Test run 
-        go run main.go  หรือ  go run .
+        go run server.go  หรือ  go run .
         เปิด browser พิมพ์ localhost:8080/ping
         result จาก api { "message": "pong" }
 ----
@@ -53,12 +53,17 @@ Step create api warehouse system
 
 8. SET connect mysql
     8.1 create .env
+    -----
             add data for connect user/password/databasename 
-            add PORT for RUN if not add default 8080
-    8.2 create folder initializers
+            add PORT for RUN if not use default 8080
+
+    8.2 create folder initializers ## api_warehouse_system/initializers
+    -----
             mkdir initializers
             cd initializers
+
     8.3 create file envVars.go and add code
+    -----
         package initializers
 
         import (
@@ -72,10 +77,10 @@ Step create api warehouse system
             if err != nil {
                 log.Fatal("Error loading .env file")
             }
-
         }
 
-    8.4 create file db.go and add code   
+    8.4 create file db.go and add code  
+    ----- 
         package initializers
 
         import (
@@ -102,16 +107,185 @@ Step create api warehouse system
 ----
 
 9.  ทำ Routes สำหรับ เรียกข้อมูล
-    create file routes.go and add code   
-    
+    9.1 create file routes.go and add code   
+    -----
+        package main
 
+        import (
+            "net/http"
 
+            "server_go/api_warehouse_system/controllers"
 
-9.  แก้ไขไฟล์ main.go เพิ่ม                    
+            "github.com/gin-gonic/gin"
+        )
+
+        func initializeRoutes() {
+
+            router.GET("/", func(c *gin.Context) {
+                c.IndentedJSON(http.StatusOK, gin.H{
+                    "message": "api main",
+                })
+            })
+
+            // Simple group: coredata
+            coredata := router.Group("/coredata")
+            {
+                coredata.GET("/", controllers.Hello)                      // localhost:xxxx/coredata/
+                coredata.GET("/position", controllers.Positions)          // localhost:xxxx/coredata/position
+
+                coredata.GET("/getposition/:id", controllers.GetPosition) // localhost:xxxx/coredata/getposition/xx
+            }
+
+        }
+----        
+
+10. create folder Controllers  ## api_warehouse_system/controllers
+        mkdir controllers  
+        cd controllers  
+
+    10.1 create file coreController.go add code
+    -----
+            package controllers
+
+            import (
+                "net/http"
+                models "server_go/api_warehouse_system/models/apiCoreData"
+
+                "github.com/gin-gonic/gin"
+            )
+
+            func Hello(c *gin.Context) {
+
+                c.IndentedJSON(http.StatusOK, gin.H{
+                    "message": "has api Group",
+                })
+            }
+
+            func Positions(c *gin.Context) {
+                positions := models.ListPosition()
+                c.IndentedJSON(http.StatusOK, positions)
+            }
+
+            func GetPosition(c *gin.Context) {
+                id := c.Param("id")
+                position := models.GetPosition(id)
+                c.IndentedJSON(http.StatusOK, position)
+            }
+----
+11. create folder models ## api_warehouse_system/models
+        mkdir models
+        cd models
+
+        11.1 create folder struc ## api_warehouse_system/struc
+        -----
+                mkdir struc
+                cd struc
+            folder struc จะเก็บโตรงสร้างของชุดช้อมูลที่จะใช้ในระบบ api ทั้งหมด
+
+        11.2 create file coreData.go สำหรับเก็บโครงสร้างข้อมูลที่จะนำไปใช้งาน
+        -----
+                package models
+
+                type Position struct {
+                    Id_staff_position  string `json:"id_staff_position" db:"id_staff_position"`
+                    Position_name      string `json:"position_name" db:"position_name"`
+                    Row_order_position string `json:"row_order_position" db:"row_order_position"`
+                    Is_active_flag     string `json:"is_active_flag" db:"is_active_flag"`
+                }     
+
+        11.3 Cretae folder apiCoreData ## api_warehouse_system/struc/apiCoreData
+        -----
+                mkdir apiCoreData
+                cd apiCoreData
+            folder apiCoreData จะเก็บ models คำสั่งในการจัดการฐานข้อมูล CRUD 
+
+        11.4 create file position.go คำสั่งในการจัดการฐานข้อมูลของ table position
+        -----
+                package models
+
+                import (
+                    "database/sql"
+                    "log"
+                    "strconv"
+
+                    _ "github.com/go-sql-driver/mysql"
+
+                    "server_go/api_warehouse_system/initializers"
+                    modelsStruc "server_go/api_warehouse_system/models/struc"
+                )
+
+                var DB *sql.DB
+
+                func ListPosition() []modelsStruc.Position {
+                    DB = initializers.DB
+                    var Positions []modelsStruc.Position
+                    var err error
+
+                    lists, err := DB.Query("SELECT id_staff_position, IFNULL(position_name,'') AS position_name, IFNULL(row_order_position,'') AS row_order_position, is_active_flag FROM staff_position")
+                    if err != nil {
+                        log.Fatal(err.Error())
+                    }
+                    defer lists.Close()
+                    for lists.Next() {
+                        var row modelsStruc.Position
+                        err = lists.Scan(
+                            &row.Id_staff_position,
+                            &row.Position_name,
+                            &row.Row_order_position,
+                            &row.Is_active_flag,
+                        )
+                        if err != nil {
+                            log.Fatal(err.Error())
+                        }
+                        Positions = append(Positions, row)
+                    }
+
+                    err = lists.Err()
+                    if err != nil {
+                        log.Fatal(err.Error())
+                    }
+                    return Positions
+                }
+----
+
+12. แก้ไขไฟล์ server.go ทั้งหมดตามนี้                    
+        package main
+
+        import (
+            "server_go/api_warehouse_system/initializers"
+
+            "github.com/gin-contrib/cors"
+            "github.com/gin-gonic/gin"
+        )
+
         func init() {
             initializers.LoadEnvVariables()
             initializers.ConnectDB()
         }
+
+        var router *gin.Engine
+
+        func main() {
+
+            router = gin.Default()
+            router.Use(cors.Default())
+
+            initializeRoutes()
+
+            router.Run()
+
+        }
+----
+
+13. Test run 
+        go run server.go  หรือ  go run .
+        เปิด browser พิมพ์ 
+        localhost:8080/
+        localhost:8080/coredata/
+        localhost:8080/coredata/position
+        localhost:8080/coredata/getposition/:id (เลือก id จาก api localhost:8080/position มาใส่)
+       
+----
 
 
 

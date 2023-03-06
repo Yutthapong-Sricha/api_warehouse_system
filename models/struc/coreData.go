@@ -1,4 +1,4 @@
-package helper
+package models
 
 type Position struct {
 	Id_staff_position  string `json:"id_staff_position" db:"id_staff_position"`
