@@ -24,3 +24,14 @@ func GetPosition(c *gin.Context) {
 	position := models.GetPosition(id)
 	c.IndentedJSON(http.StatusOK, position)
 }
+
+func Branchs(c *gin.Context) {
+	branchs := models.ListBranch()
+	c.IndentedJSON(http.StatusOK, branchs)
+}
+
+func GetBranch(c *gin.Context) {
+	id := c.Param("id")
+	branch := models.GetBranch(id)
+	c.IndentedJSON(http.StatusOK, branch)
+}
