@@ -1,27 +1,13 @@
-package main
+package routes
 
 import (
-	"net/http"
-
 	"server_go/api_warehouse_system/controllers"
 
 	"github.com/gin-gonic/gin"
 )
 
-func initializeRoutes() {
-
-	// router.GET("/", func(c *gin.Context) {
-	// 	c.IndentedJSON(http.StatusForbidden, gin.H{"message": "error api"})
-	// })
-
-	router.GET("/", func(c *gin.Context) {
-		c.IndentedJSON(http.StatusOK, gin.H{
-			"message": "api main",
-		})
-	})
-
-	// Simple group: coredata
-	coredata := router.Group("/coredata")
+func Coredata(routes *gin.Engine) {
+	coredata := routes.Group("/coredata")
 	{
 		coredata.GET("/", controllers.Hello)                      // localhost:xxxx/coredata/
 		coredata.GET("/position", controllers.Positions)          // localhost:xxxx/coredata/position
@@ -30,5 +16,4 @@ func initializeRoutes() {
 		coredata.GET("/branchs", controllers.Branchs)         // localhost:xxxx/coredata/branchs
 		coredata.GET("/getbranch/:id", controllers.GetBranch) // localhost:xxxx/coredata/getbranch/xx
 	}
-
 }

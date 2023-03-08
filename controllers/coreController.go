@@ -8,7 +8,6 @@ import (
 )
 
 func Hello(c *gin.Context) {
-
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"message": "has api Group",
 	})

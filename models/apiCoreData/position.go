@@ -7,6 +7,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 
 	"server_go/api_warehouse_system/initializers"
+
 	modelsStruc "server_go/api_warehouse_system/models/struc"
 )
 
