@@ -15,7 +15,7 @@ func ListBranch() []modelsStruc.Branch {
 	var Branchs []modelsStruc.Branch
 	var err error
 
-	list, err := initializers.DB.Query("SELECT * FROM branch")
+	list, err := initializers.DB.Query("SELECT id_branch, branch_name, IFNULL(address,'') AS address, IFNULL(id_addr_tambon,0) AS id_addr_tambon, IFNULL(id_addr_amphure, 0) AS id_addr_amphure, IFNULL(id_addr_province, 0) AS id_addr_province, IFNULL(branch_tel, '') as branch_tel,  is_active_flag  FROM branch")
 	if err != nil {
 		log.Fatal(err.Error())
 	}
@@ -30,7 +30,7 @@ func ListBranch() []modelsStruc.Branch {
 			&row.Id_addr_amphure,
 			&row.Id_addr_province,
 			&row.Branch_tel,
-			&row.Branch_line_id,
+			//&row.Branch_line_id,
 			&row.Is_active_flag,
 		)
 		if err != nil {

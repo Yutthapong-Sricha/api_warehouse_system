@@ -34,3 +34,14 @@ func GetBranch(c *gin.Context) {
 	branch := models.GetBranch(id)
 	c.IndentedJSON(http.StatusOK, branch)
 }
+
+func Categorys(c *gin.Context) {
+	categorys := models.ListCategory()
+	c.IndentedJSON(http.StatusOK, categorys)
+}
+
+func GetCategory(c *gin.Context) {
+	id := c.Param("id")
+	category := models.GetCategory(id)
+	c.IndentedJSON(http.StatusOK, category)
+}

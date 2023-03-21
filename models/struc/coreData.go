@@ -20,3 +20,12 @@ type Position struct {
 	Is_active_flag     int    `json:"is_active_flag" db:"is_active_flag"`
 	Id_position_enc    string `json:"id_position_enc" db:"id_position_enc"`
 }
+
+type Category struct {
+	Id_prod_category      int    `json:"id_prod_category" db:"id_prod_category"`
+	Category_name         string `json:"category_name" db:"category_name"`
+	Is_active_flag        int    `json:"is_active_flag" db:"is_active_flag"`
+	Record_update_time    int    `json:"record_update_time" db:"record_update_time"`
+	Record_update_by_name string `json:"record_update_by_name" db:"record_update_by_name"`
+	Id_prod_category_enc  string `json:"id_prod_category_enc" db:"id_prod_category_enc"`
+}

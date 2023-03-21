@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Coredata(routes *gin.Engine) {
+func Coredata(routes *gin.RouterGroup) {
 	coredata := routes.Group("/coredata")
 	{
 		coredata.GET("/", controllers.Hello)                      // localhost:xxxx/coredata/
@@ -15,5 +15,8 @@ func Coredata(routes *gin.Engine) {
 
 		coredata.GET("/branchs", controllers.Branchs)         // localhost:xxxx/coredata/branchs
 		coredata.GET("/getbranch/:id", controllers.GetBranch) // localhost:xxxx/coredata/getbranch/xx
+
+		coredata.GET("/categorys", controllers.Categorys)         // localhost:xxxx/coredata/branchs
+		coredata.GET("/getcategory/:id", controllers.GetCategory) // localhost:xxxx/coredata/getbranch/xx
 	}
 }
