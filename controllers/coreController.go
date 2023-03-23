@@ -45,3 +45,14 @@ func GetCategory(c *gin.Context) {
 	category := models.GetCategory(id)
 	c.IndentedJSON(http.StatusOK, category)
 }
+
+func Suppliers(c *gin.Context) {
+	suppliers := models.ListSupplier()
+	c.IndentedJSON(http.StatusOK, suppliers)
+}
+
+func Getsupplier(c *gin.Context) {
+	id := c.Param("id")
+	supplier := models.GetSupplier(id)
+	c.IndentedJSON(http.StatusOK, supplier)
+}

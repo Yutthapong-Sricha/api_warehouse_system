@@ -2,18 +2,30 @@ package models
 
 // Binding from JSON
 type Customer struct {
-	Id_customer   int    `json:"id_customer" db:"id_customer"`
-	Cust_fullname string `json:"cust_fullname" db:"cust_fullname"`
-	Cust_mobile   string `json:"cust_mobile" db:"cust_mobile"`
-}
-
-type Supplier struct {
-	Id_supplier      int    `json:"id_supplier" db:"id_supplier"`
-	Supp_name        string `json:"supp_name" db:"supp_name"`
-	Supp_address     string `json:"supp_address" db:"supp_address"`
-	Id_addr_tambon   int    `json:"id_addr_tambon" db:"id_addr_tambon"`
-	Id_addr_amphure  int    `json:"id_addr_amphure" db:"id_addr_amphure"`
-	Id_addr_province int    `json:"id_addr_province" db:"id_addr_province"`
+	Id_customer           int    `json:"id_customer" db:"id_customer"`
+	Cust_code_spc         string `json:"cust_code_spc" db:"cust_code_spc"`
+	Cust_name             string `json:"cust_name" db:"cust_name"`
+	Cust_lastname         string `json:"cust_lastname" db:"cust_lastname"`
+	Cust_fullname         string `json:"cust_fullname" db:"cust_fullname"`
+	Cust_nickname         string `json:"cust_nickname" db:"cust_nickname"`
+	Cust_tax_id           string `json:"cust_tax_id" db:"cust_tax_id"`
+	Cust_mobile           string `json:"cust_mobile" db:"cust_mobile"`
+	Cust_tel              string `json:"cust_tel" db:"cust_tel"`
+	Cust_email            string `json:"cust_email" db:"cust_email"`
+	Cust_address          string `json:"cust_address" db:"cust_address"`
+	Id_addr_tambon        int    `json:"id_addr_tambon" db:"id_addr_tambon"`
+	Id_addr_amphure       int    `json:"id_addr_amphure" db:"id_addr_amphure"`
+	Id_addr_province      int    `json:"id_addr_province" db:"id_addr_province"`
+	Tmp_zip_code          string `json:"tmp_zip_code" db:"tmp_zip_code"`
+	Pers4_or_comp8        int    `json:"pers4_or_comp8" db:"pers4_or_comp8"`
+	Contact_name          string `json:"contact_name" db:"contact_name"`
+	Contact_note          string `json:"contact_note" db:"contact_note"`
+	Is_member_356         int    `json:"is_member_356" db:"is_member_356"`
+	Cust_356_flag         int    `json:"cust_356_flag" db:"cust_356_flag"`
+	Note                  string `json:"note" db:"note"`
+	Record_update_time    int    `json:"record_update_time" db:"record_update_time"`
+	Record_update_by_name string `json:"record_update_by_name" db:"record_update_by_name"`
+	Id_customer_enc       string `json:"id_customer_enc" db:"id_customer_enc"`
 }
 
 type Staff struct {
@@ -38,10 +50,38 @@ type Staff struct {
 	Tmp_position_name     string `json:"tmp_position_name" db:"tmp_position_name"`
 	Birth_day_ddmm20yy    string `json:"birth_day_ddmm20yy" db:"birth_day_ddmm20yy"`
 	Record_create_time    int    `json:"record_create_time" db:"record_create_time"`
-	Record_create_by_id   int    `json:"record_create_by_id" db:"record_create_by_id"`
 	Record_create_by_name string `json:"record_create_by_name" db:"record_create_by_name"`
 	Record_update_time    int    `json:"record_update_time" db:"record_update_time"`
-	Record_update_by_id   int    `json:"record_update_by_id" db:"record_update_by_id"`
 	Record_update_by_name string `json:"record_update_by_name" db:"record_update_by_name"`
 	Note                  string `json:"note" db:"note"`
+	Id_staff_core_enc     string `json:"id_staff_core_enc" db:"id_staff_core_enc"`
+}
+
+type Supplier struct {
+	Id_supplier           int    `json:"id_supplier" db:"id_supplier"`
+	Supp_tax_id           string `json:"supp_tax_id" db:"supp_tax_id"`
+	Supp_name             string `json:"supp_name" db:"supp_name"`
+	Supp_address          string `json:"supp_address" db:"supp_address"`
+	Id_addr_tambon        int    `json:"id_addr_tambon" db:"id_addr_tambon"`
+	Id_addr_amphure       int    `json:"id_addr_amphure" db:"id_addr_amphure"`
+	Id_addr_province      int    `json:"id_addr_province" db:"id_addr_province"`
+	Tmp_zip_code          string `json:"tmp_zip_code" db:"tmp_zip_code"`
+	Supp_tel              string `json:"supp_tel" db:"supp_tel"`
+	Supp_email            string `json:"supp_email" db:"supp_email"`
+	Supp_mobile           string `json:"supp_mobile" db:"supp_mobile"`
+	Contact1_name         string `json:"contact1_name" db:"contact1_name"`
+	Contact1_mobile       string `json:"contact1_mobile" db:"contact1_mobile"`
+	Contact1_email        string `json:"contact1_email" db:"contact1_email"`
+	Contact1_note         string `json:"contact1_note" db:"contact1_note"`
+	Contact2_name         string `json:"contact2_name" db:"contact2_name"`
+	Contact2_mobile       string `json:"contact2_mobile" db:"contact2_mobile"`
+	Contact2_email        string `json:"contact2_email" db:"contact2_email"`
+	Contact2_note         string `json:"contact2_note" db:"contact2_note"`
+	Due_date              string `json:"due_date" db:"due_date"`
+	Acc_no                string `json:"acc_no" db:"acc_no"`
+	Bankname              string `json:"bankname" db:"bankname"`
+	Note                  string `json:"note" db:"note"`
+	Record_update_time    int    `json:"record_update_time" db:"record_update_time"`
+	Record_update_by_name string `json:"record_update_by_name" db:"record_update_by_name"`
+	Id_supplier_enc       string `json:"id_supplier_enc" db:"id_supplier_enc"`
 }

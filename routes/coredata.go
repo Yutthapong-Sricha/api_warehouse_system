@@ -16,7 +16,11 @@ func Coredata(routes *gin.RouterGroup) {
 		coredata.GET("/branchs", controllers.Branchs)         // localhost:xxxx/coredata/branchs
 		coredata.GET("/getbranch/:id", controllers.GetBranch) // localhost:xxxx/coredata/getbranch/xx
 
-		coredata.GET("/categorys", controllers.Categorys)         // localhost:xxxx/coredata/branchs
-		coredata.GET("/getcategory/:id", controllers.GetCategory) // localhost:xxxx/coredata/getbranch/xx
+		coredata.GET("/categorys", controllers.Categorys)         // localhost:xxxx/coredata/categorys
+		coredata.GET("/getcategory/:id", controllers.GetCategory) // localhost:xxxx/coredata/getcategory/xx
+
+		coredata.GET("/suppliers", controllers.Suppliers)         // localhost:xxxx/coredata/branchs
+		coredata.GET("/getsupplier/:id", controllers.Getsupplier) // localhost:xxxx/coredata/getbranch/xx
+
 	}
 }
