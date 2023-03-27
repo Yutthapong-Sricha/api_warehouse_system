@@ -2,6 +2,7 @@ package models
 
 import (
 	"log"
+	"server_go/api_warehouse_system/helpers"
 	"server_go/api_warehouse_system/initializers"
 
 	"strconv"
@@ -11,11 +12,14 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func ListCategory() []modelsStruc.Category {
+func ListCategory(act string) []modelsStruc.Category {
 	var Categorys []modelsStruc.Category
 	var err error
-
-	list, err := initializers.DB.Query("SELECT id_prod_category, category_name, is_active_flag, IFNULL(record_update_time,0) AS record_update_time, IFNULL(record_update_by_name,'') AS record_update_by_name FROM prod_category")
+	sql_statement := "SELECT id_prod_category, category_name, is_active_flag, IFNULL(record_update_time,0) AS record_update_time, IFNULL(record_update_by_name,'') AS record_update_by_name FROM prod_category "
+	if act == "/active_only" {
+		sql_statement = sql_statement + " where is_active_flag=1 "
+	}
+	list, err := initializers.DB.Query(sql_statement)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
@@ -32,7 +36,10 @@ func ListCategory() []modelsStruc.Category {
 		if err != nil {
 			log.Fatal(err.Error())
 		} else {
-			row.Id_prod_category_enc = "string_enc"
+			id_enc := helpers.Encrypt(strconv.Itoa(row.Id_prod_category))
+
+			row.Id_prod_category_enc = id_enc
+
 		}
 		Categorys = append(Categorys, row)
 	}
@@ -51,7 +58,7 @@ func GetCategory(id string) modelsStruc.Category {
 	if conv_err != nil {
 		panic(err.Error())
 	}
-	statement, err := initializers.DB.Prepare("SELECT * FROM prod_category WHERE id_prod_category=?")
+	statement, err := initializers.DB.Prepare("SELECT id_prod_category, category_name, is_active_flag, IFNULL(record_update_time,0) AS record_update_time, IFNULL(record_update_by_name,'') AS record_update_by_name FROM prod_category WHERE id_prod_category=?")
 	if err != nil {
 		log.Fatal(err.Error())
 	}
@@ -67,7 +74,10 @@ func GetCategory(id string) modelsStruc.Category {
 	if err != nil {
 		return Category
 	} else {
-		Category.Id_prod_category_enc = "string_enc"
+		id_enc := helpers.Encrypt(strconv.Itoa(Category.Id_prod_category))
+
+		Category.Id_prod_category_enc = id_enc
+
 	}
 	return Category
 }

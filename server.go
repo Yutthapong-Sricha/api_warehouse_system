@@ -16,10 +16,8 @@ func init() {
 //var routes *gin.Engine
 
 func main() {
-
 	app := gin.Default()
 	app.Use(cors.Default())
 	routes.Setup(app)
 	app.Run()
-
 }

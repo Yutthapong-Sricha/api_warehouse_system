@@ -4,18 +4,22 @@ import (
 	"log"
 	"strconv"
 
-	_ "github.com/go-sql-driver/mysql"
-
+	"server_go/api_warehouse_system/helpers"
 	"server_go/api_warehouse_system/initializers"
+
+	_ "github.com/go-sql-driver/mysql"
 
 	modelsStruc "server_go/api_warehouse_system/models/struc"
 )
 
-func ListPosition() []modelsStruc.Position {
+func ListPosition(act string) []modelsStruc.Position {
 	var Positions []modelsStruc.Position
 	var err error
-
-	list, err := initializers.DB.Query("SELECT id_staff_position, IFNULL(position_name,'') AS position_name, IFNULL(row_order_position,'') AS row_order_position, is_active_flag FROM staff_position")
+	sql_statement := "SELECT id_staff_position, IFNULL(position_name,'') AS position_name, IFNULL(row_order_position,'') AS row_order_position, is_active_flag FROM staff_position "
+	if act == "/active_only" {
+		sql_statement = sql_statement + " where is_active_flag=1 "
+	}
+	list, err := initializers.DB.Query(sql_statement)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
@@ -31,7 +35,10 @@ func ListPosition() []modelsStruc.Position {
 		if err != nil {
 			log.Fatal(err.Error())
 		} else {
-			row.Id_position_enc = "string_enc"
+			id_enc := helpers.Encrypt(strconv.Itoa(row.Id_staff_position))
+
+			row.Id_position_enc = id_enc
+
 		}
 		Positions = append(Positions, row)
 	}
@@ -50,7 +57,7 @@ func GetPosition(id string) modelsStruc.Position {
 	if conv_err != nil {
 		panic(err.Error())
 	}
-	statement, err := initializers.DB.Prepare("SELECT * FROM staff_position WHERE id_staff_position=?")
+	statement, err := initializers.DB.Prepare("SELECT id_staff_position, IFNULL(position_name,'') AS position_name, IFNULL(row_order_position,'') AS row_order_position, is_active_flag FROM staff_position WHERE id_staff_position=?")
 	if err != nil {
 		log.Fatal(err.Error())
 	}
@@ -65,7 +72,10 @@ func GetPosition(id string) modelsStruc.Position {
 	if err != nil {
 		return Position
 	} else {
-		Position.Id_position_enc = "string_enc"
+		id_enc := helpers.Encrypt(strconv.Itoa(Position.Id_staff_position))
+
+		Position.Id_position_enc = id_enc
+
 	}
 	return Position
 }

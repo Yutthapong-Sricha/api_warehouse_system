@@ -59,12 +59,16 @@ type Staff struct {
 
 type Supplier struct {
 	Id_supplier           int    `json:"id_supplier" db:"id_supplier"`
+	Supp_code             string `json:"supp_code" db:"supp_code"`
 	Supp_tax_id           string `json:"supp_tax_id" db:"supp_tax_id"`
 	Supp_name             string `json:"supp_name" db:"supp_name"`
 	Supp_address          string `json:"supp_address" db:"supp_address"`
 	Id_addr_tambon        int    `json:"id_addr_tambon" db:"id_addr_tambon"`
+	Tmp_tambon_name       string `json:"tmp_tambon_name" db:"tmp_tambon_name"`
 	Id_addr_amphure       int    `json:"id_addr_amphure" db:"id_addr_amphure"`
+	Tmp_amphure_name      string `json:"tmp_amphure_name" db:"tmp_amphure_name"`
 	Id_addr_province      int    `json:"id_addr_province" db:"id_addr_province"`
+	Tmp_province_name     string `json:"tmp_province_name" db:"tmp_province_name"`
 	Tmp_zip_code          string `json:"tmp_zip_code" db:"tmp_zip_code"`
 	Supp_tel              string `json:"supp_tel" db:"supp_tel"`
 	Supp_email            string `json:"supp_email" db:"supp_email"`
@@ -83,5 +87,6 @@ type Supplier struct {
 	Note                  string `json:"note" db:"note"`
 	Record_update_time    int    `json:"record_update_time" db:"record_update_time"`
 	Record_update_by_name string `json:"record_update_by_name" db:"record_update_by_name"`
+	Status_356_flag       int    `json:"status_356_flag" db:"status_356_flag"`
 	Id_supplier_enc       string `json:"id_supplier_enc" db:"id_supplier_enc"`
 }

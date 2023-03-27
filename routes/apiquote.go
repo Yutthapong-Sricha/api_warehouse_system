@@ -1,19 +1,18 @@
 package routes
 
 import (
-	"net/http"
+	"server_go/api_warehouse_system/controllers"
 
 	"github.com/gin-gonic/gin"
 )
 
-func Apiquote(routes *gin.Engine) {
+func Apiquote(routes *gin.RouterGroup) {
 	quotation := routes.Group("/quotation")
 	{
-		quotation.GET("/", func(c *gin.Context) {
-			c.IndentedJSON(http.StatusOK, gin.H{
-				"message": "api quotation",
-			})
-		}) // localhost:xxxx/apistaff/
+		quotation.GET("/", controllers.Hello_quote) // localhost:xxxx/apistaff/
+
+		quotation.GET("/promotions/*act", controllers.Promotions)
+		quotation.GET("/getpromotion/:id_enc", controllers.GetPromotion)
 	}
 
 }

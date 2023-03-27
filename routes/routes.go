@@ -25,5 +25,5 @@ func Setup(app *gin.Engine) {
 		})
 	})
 	Coredata(api)
-	Apiquote(app)
+	Apiquote(api)
 }
