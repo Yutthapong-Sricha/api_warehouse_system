@@ -1,5 +1,12 @@
 package models
 
+type ShortCust struct {
+	Cust_name     string `json:"cust_name" binding:"required"`
+	Cust_lastname string `json:"cust_lastname" binding:"required"`
+	Cust_mobile   string `json:"cust_mobile" binding:"required"`
+	Cust_tax_id   string `json:"Cust_tax_id" binding:"required"`
+}
+
 // Binding from JSON
 type Customer struct {
 	Id_customer           int    `json:"id_customer" db:"id_customer"`
@@ -43,6 +50,7 @@ type Staff struct {
 	Staff_mobile1         string `json:"staff_mobile1" db:"staff_mobile1"`
 	Staff_mobile2         string `json:"staff_mobile2" db:"staff_mobile2"`
 	Staff_tel             string `json:"staff_tel" db:"staff_tel"`
+	Staff_email           string `json:"staff_email" db:"staff_email"`
 	Pwd_verification      string `json:"pwd_verification" db:"pwd_verification"`
 	Is_active_flag        int    `json:"is_active_flag" db:"is_active_flag"`
 	Staff_line_id         string `json:"staff_line_id" db:"staff_line_id"`

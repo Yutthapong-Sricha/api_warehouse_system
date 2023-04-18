@@ -13,6 +13,8 @@ func Apiquote(routes *gin.RouterGroup) {
 
 		quotation.GET("/promotions/*act", controllers.Promotions)
 		quotation.GET("/getpromotion/:id_enc", controllers.GetPromotion)
+
+		quotation.POST("/addshortcust", controllers.AddShortCust)
 	}
 
 }

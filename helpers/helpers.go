@@ -5,18 +5,21 @@ import (
 	"crypto/cipher"
 	"crypto/rand"
 	"encoding/hex"
+	"os"
 )
 
 var (
-	// We're using a 32 byte long secret key.
-	// This is probably something you generate first
-	// then put into and environment variable.
-	//secretKey string = "N1PCdw3M2B1TfJhoaY2mL736p2vCUc47"
-	//secretKey string = "IamSreepreechaHolding1FebMay2023"
-	secretKey string = "AmSpcHolding2023"
+// We're using a 32 byte long secret key.
+// This is probably something you generate first
+// then put into and environment variable.
+// secretKey string = "N1PCdw3M2B1TfJhoaY2mL736p2vCUc47"
+// secretKey string = "IamSreepreechaHolding1FebMay2023"
+// secretKey string = "AmSpcHolding2023"
+// secretKey string = os.Getenv("SECRETKEY")
 )
 
 func Encrypt(plaintext string) string {
+	secretKey := os.Getenv("SECRETKEY")
 	aes, err := aes.NewCipher([]byte(secretKey))
 	if err != nil {
 		panic(err)
@@ -45,6 +48,7 @@ func Encrypt(plaintext string) string {
 }
 
 func Decrypt(hex_ciphertext string) string {
+	secretKey := os.Getenv("SECRETKEY")
 	ciphertext, _ := hex.DecodeString(hex_ciphertext)
 	aes, err := aes.NewCipher([]byte(secretKey))
 	if err != nil {
@@ -68,3 +72,9 @@ func Decrypt(hex_ciphertext string) string {
 
 	return string(plaintext)
 }
+
+// func Hsession() {
+// 	store := cookie.NewStore([]byte(secretKey))
+// 	sessions.Sessions("SPCSession", store)
+// 	return sessions
+// }

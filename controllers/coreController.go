@@ -1,16 +1,40 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 	modelsCore "server_go/api_warehouse_system/models/apiCoreData"
 
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 func Hello(c *gin.Context) {
-	c.IndentedJSON(http.StatusOK, gin.H{
-		"message": "has api Group",
-	})
+	sID := uuid.NewString()
+
+	//session := sessions.Default(c)
+
+	session := sessions.Default(c)
+	session.Set("id", sID)
+
+	session.Set("email", "test@gmail.com")
+	session.Save()
+	fmt.Println(session.ID())
+	fmt.Println(session.Get("id"))
+	fmt.Println(session.Get("email"))
+	// c.JSON(http.StatusOK, gin.H{
+	// 	"message":   "Google UUID",
+	// 	"sessionID": sID,
+	// })
+
+	// check session id
+	/*if sessionID == nil {
+		c.JSON(http.StatusNotFound, gin.H{
+			"message": "unauthorized",
+		})
+		c.Abort()
+	}*/
 }
 
 func Positions(c *gin.Context) {
@@ -28,7 +52,8 @@ func GetPosition(c *gin.Context) {
 func Branchs(c *gin.Context) {
 	act := c.Param("act")
 	branchs := modelsCore.ListBranch(act)
-	c.IndentedJSON(http.StatusOK, branchs)
+	c.IndentedJSON(http.StatusOK, gin.H{"data": branchs})
+
 }
 
 func GetBranch(c *gin.Context) {

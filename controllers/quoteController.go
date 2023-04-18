@@ -24,3 +24,14 @@ func GetPromotion(c *gin.Context) {
 	promotion := modelsQuote.GetPromotion(id_enc)
 	c.IndentedJSON(http.StatusOK, promotion)
 }
+
+func AddShortCust(c *gin.Context) {
+	ret, err := modelsQuote.InstShortCust(c)
+	//fmt.Println(err.Error())
+	if err != nil {
+		c.IndentedJSON(http.StatusOK, gin.H{"status": "error", "message": err.Error()})
+	} else {
+		c.IndentedJSON(http.StatusOK, gin.H{"status": "success", "message": "บันทึก " + ret + " เรียบร้อยแล้ว"})
+	}
+
+}
